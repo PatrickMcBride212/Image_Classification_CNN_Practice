@@ -32,12 +32,16 @@ def plot_history(history):
 
 def setup_file_subsystem():
     # initial file system setup
+    long = False
     original_dataset_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Data'
     if not(os.path.isdir(original_dataset_dir)):
-        print("Please download dataset from https://www.kaggle.com/c/dogs-vs-cats/data")
-        print("Extract into " + original_dataset_dir)
-        print("Then have only the images from the train folder in the directory.")
-        exit(0)
+        long = True
+        original_dataset_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Image_Classification_CNN_Practice/Data'
+        if not(os.path.isdir(original_dataset_dir)):
+            print("Please download dataset from https://www.kaggle.com/c/dogs-vs-cats/data")
+            print("Extract into " + original_dataset_dir)
+            print("Then have only the images from the train folder in the directory.")
+            exit(0)
     base_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data'
     os.mkdir(base_dir)
     train_dir = os.path.join(base_dir, 'train')
@@ -108,15 +112,20 @@ def setup_file_subsystem():
     print("Total Training Dog Images:", len(os.listdir(train_dogs_dir)))
     print("Total Validation Dog Images:", len(os.listdir(validation_dogs_dir)))
     print("Total Test Dog Images:", len(os.listdir(test_dogs_dir)))
+    return long
 
 
 def main():
     # first time setup of the resource filesystem
-    if not(os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data')):
-        setup_file_subsystem()
-
-    train_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/train'
-    validation_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/validation'
+    long = False
+    if not(os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data') or os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Image_Classification_CNN_Practice/Reduced_Data')):
+        long = setup_file_subsystem()
+    if not long:
+        train_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/train'
+        validation_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/validation'
+    else:
+        train_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Image_Classification_CNN_Practice/Reduced_Data/train'
+        validation_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Image_Classification_CNN_Practice/Reduced_Data/validation'
     # beginning construction of the Convnet
     model = models.Sequential()
     model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)))
