@@ -5,6 +5,7 @@ from keras import models
 from keras import optimizers
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+import time
 
 
 def plot_history(history):
@@ -127,6 +128,9 @@ def main():
     else:
         train_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN-Practice/Image_Classification_CNN_Practice/Reduced_Data/train'
         validation_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN-Practice/Image_Classification_CNN_Practice/Reduced_Data/validation'
+
+    # Timing the program
+    start_time = time.time()
     # beginning construction of the Convnet
     model = models.Sequential()
     model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)))
@@ -174,6 +178,7 @@ def main():
 
     # Plotting the results
     plot_history(history)
+    print("Runtime: %s" % (time.time() - start_time))
 
 
 if __name__ == '__main__':
