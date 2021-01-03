@@ -120,8 +120,10 @@ def setup_file_subsystem():
 def main():
     # first time setup of the resource filesystem
     long = False
-    if not(os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data') or os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN-Practice/Image_Classification_CNN_Practice/Reduced_Data')):
-        long = setup_file_subsystem()
+    if not(os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data')):
+        long = True
+        if not (os.path.isdir('C:/Users/mcbri/PycharmProjects/Image_Classification_CNN-Practice/Image_Classification_CNN_Practice/Reduced_Data')):
+            long = setup_file_subsystem()
     if not long:
         train_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/train'
         validation_dir = 'C:/Users/mcbri/PycharmProjects/Image_Classification_CNN_Practice/Reduced_Data/validation'
